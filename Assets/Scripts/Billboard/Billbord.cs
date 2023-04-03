@@ -10,7 +10,7 @@ public class Billbord : MonoBehaviour
     private Transform targetTr = null;
 
     private Panel_Joint pj = null;
-    private Screen screen = null;
+    private BScreen screen = null;
 
     //플레이어간의 인지 거리 변화하면 안되기에 상수로 선언
     //Screen Play Distance
@@ -24,7 +24,7 @@ public class Billbord : MonoBehaviour
         //transform.GetChild
         //GameObject.Fint = 찾을 때 많은 연산이 필요한다.
         pj = GetComponentInChildren<Panel_Joint>();
-        screen = GetComponentInChildren<Screen>();
+        screen = GetComponentInChildren<BScreen>();
     }
 
     private void Start()

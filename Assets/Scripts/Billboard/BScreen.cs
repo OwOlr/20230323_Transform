@@ -7,7 +7,7 @@ using UnityEngine.Video;
 //[RequireComponent(typeof(VideoPlayer))]
 
 //영상을 끄고 키는 기능만 담겨져 있다.
-public class Screen : MonoBehaviour
+public class BScreen : MonoBehaviour
 {
     private VideoPlayer vp = null;
 

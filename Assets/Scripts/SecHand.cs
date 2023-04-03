@@ -11,8 +11,8 @@ public class SecHand : MonoBehaviour
     private Transform targetTr = null;
 
     [Header("- Values -")]
-    [SerializeField, Range(0f,300f)]
-    private float speed = 10f;
+    //[SerializeField, Range(0f,300f)]
+    //private float speed = 10f;
     [SerializeField, Range(0f,10f)]
     private float dis = 1f;
 
