@@ -22,10 +22,10 @@ public class UIMenuButton : MonoBehaviour
     }
 
     //테스트용
-    private void Start()
-    {
-        InitInfos("콜라", 600, 3);
-    }
+    //private void Start()
+    //{
+    //    InitInfos("콜라", 600, 3);
+    //}
 
     //Initialization - 초기화
     public void InitInfos(string _name, int _price, int _stock)
@@ -35,6 +35,14 @@ public class UIMenuButton : MonoBehaviour
         texts[(int)EMBInfo.Price].text = _price.ToString(); //ToString() : 숫자 -> 문자열 로 변환
         texts[(int)EMBInfo.Stock].text = _stock.ToString();
 
+    }
+    
+    public void InitInfos(VendingMachine.SProductInfo _productInfo)
+    {
+        InitInfos(
+            VendingMachine.VMProductToName(_productInfo.product),
+            _productInfo.price,
+            _productInfo.stock);
     }
 
 }
