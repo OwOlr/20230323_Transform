@@ -2123,7 +2123,7 @@ PrefabInstance:
       objectReference: {fileID: 474382653}
     - target: {fileID: 8412841148586644462, guid: d75704f7c7320274f8e1b9fb246869a4, type: 3}
       propertyPath: productInfoList.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8412841148586644462, guid: d75704f7c7320274f8e1b9fb246869a4, type: 3}
       propertyPath: productInfoList.Array.data[0].price

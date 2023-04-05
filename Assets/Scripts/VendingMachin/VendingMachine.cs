@@ -23,6 +23,13 @@ public class VendingMachine : MonoBehaviour
         public EVMProduct product;
         public int price;
         public int stock;
+
+        public bool CheckStock() { return stock > 0; }
+        public void Sell() { 
+               
+            if(CheckStock()) --stock; 
+        
+        }
     }
 
     [SerializeField]
@@ -53,7 +60,8 @@ public class VendingMachine : MonoBehaviour
         {
             if (uiMenu)
             {
-                uiMenu.BuildBtns(productInfoList);
+                uiMenu.BuildBtns(productInfoList,
+                    OnClickMenu);
                 uiMenu.gameObject.SetActive(true);
 
             }
@@ -99,6 +107,31 @@ public class VendingMachine : MonoBehaviour
             default:
                 return "몰?루?ㅋ";
         }
+    }
+
+
+    //연락을 받을 코드 공간
+
+    public void OnClickMenu(int _btnNum)
+    {
+
+        Debug.Log(productInfoList[_btnNum].product.ToString() +
+            "(" + productInfoList[_btnNum].price +
+            ") : " + productInfoList[_btnNum].stock);
+
+        if (!productInfoList[_btnNum].CheckStock()) return;
+
+        //임시객체로 관리
+        //productInfoList[selectedIdx].stock = "1";
+        productInfoList[_btnNum].Sell();
+        
+        
+        //상품만들기
+        //보유 돈 차감
+        // 버튼 정보 갱신
+
+
+
     }
 
 }
