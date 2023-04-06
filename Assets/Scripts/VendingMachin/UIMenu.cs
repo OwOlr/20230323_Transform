@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UIMenu : MonoBehaviour
 {
 
-    public delegate void OnclickMenuDelegate(int _btnNum);
+    public delegate void OnclickMenuDelegate(int _btnNum,UIMenuButton _menuBtn);
 
     //버튼 프리팹 가져오기
     [SerializeField]
@@ -163,5 +163,11 @@ public class UIMenu : MonoBehaviour
         if (rowCnt > 1) pos.y = startPos.y - ((_idx / COL_MAX) * btnDist.y);
 
         return pos;
+    }
+
+    public void UpdateButtonInfo(int _btnNum,  VendingMachine.SProductInfo _productInfo)
+    {
+        menuBtnList[_btnNum].UpdateInfo(_productInfo);
+
     }
 }

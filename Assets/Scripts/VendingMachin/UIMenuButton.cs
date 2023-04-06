@@ -46,10 +46,12 @@ public class UIMenuButton : MonoBehaviour
                 {
 
                     //if(_onClickCallback != null)_onClickCallback(i);
-                    _onClickCallback?.Invoke(_num);
+                    _onClickCallback?.Invoke(_num,this);
                     Invoke("_onClickCallback", 1f);
                 }
             );
+
+        btn.interactable = _stock > 0;
 
     }
     
@@ -64,6 +66,15 @@ public class UIMenuButton : MonoBehaviour
             _num,
             _onClickCallback);
 
+    }
+
+    public void UpdateInfo(VendingMachine.SProductInfo _productInfo)
+    {
+        texts[(int)EMBInfo.Name].text = VendingMachine.VMProductToName(_productInfo.product);
+        texts[(int)EMBInfo.Price].text = _productInfo.price.ToString();
+        texts[(int)EMBInfo.Stock].text = _productInfo.stock.ToString();
+
+        btn.interactable = _productInfo.stock > 0;
     }
 
 }

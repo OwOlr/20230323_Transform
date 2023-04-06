@@ -112,24 +112,41 @@ public class VendingMachine : MonoBehaviour
 
     //연락을 받을 코드 공간
 
-    public void OnClickMenu(int _btnNum)
+    public void OnClickMenu(int _btnNum, UIMenuButton _menuBtn)
     {
 
-        Debug.Log(productInfoList[_btnNum].product.ToString() +
-            "(" + productInfoList[_btnNum].price +
-            ") : " + productInfoList[_btnNum].stock);
+
+        //Debug.Log(productInfoList[_btnNum].product.ToString() +
+        //    "(" + productInfoList[_btnNum].price +
+        //    ") : " + productInfoList[_btnNum].stock);
 
         if (!productInfoList[_btnNum].CheckStock()) return;
 
         //임시객체로 관리
-        //productInfoList[selectedIdx].stock = "1";
-        productInfoList[_btnNum].Sell();
-        
-        
-        //상품만들기
-        //보유 돈 차감
-        // 버튼 정보 갱신
+        //--productInfoList[selectedIdx].stock;
+        //함수방식으로 변경 -> 갯수변경이 안됐다.
+        //productInfoList[_btnNum].Sell();
+        //리스트는 목록형태로 관리
+        //C++은 바로 구조체 접근이 가능하다.
+        //C#은 실제 원본이 아닌 매번 구조체를 복사한다.
+        //class 참조형식이라 가능하다.
+        //함수형식도 복사본만 변경이 가능하다.
+        //복사본을 저장하고 원본에 대시 저장해주는 방식으로 해결
 
+        SProductInfo changeInfo = productInfoList[_btnNum];
+        //--changeInfo.stock;
+        changeInfo.Sell();
+        productInfoList[_btnNum] = changeInfo;
+
+
+        // 버튼 정보 갱신
+        //uiMenu.UpdateButtonInfo(_btnNum, changeInfo);
+        //객체지향이 깨지지만 퍼포먼스를 챙길 수 있다.
+        _menuBtn.UpdateInfo(changeInfo);
+
+        //상품만들기
+
+        //보유 돈 차감
 
 
     }
