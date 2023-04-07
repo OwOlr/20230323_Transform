@@ -13,6 +13,10 @@ public class PlayerController : MonoBehaviour
     private MLBDelegate mlbCallback = null;
     private MRBDelegate mrbCallback = null;
 
+    public delegate void VoidVoidDelegate();
+    public delegate void VoidIntDelegate(int _val);
+    private VoidVoidDelegate useCallback = null;
+
     // Class Member Variables 클래스 멤버 변수
     // private , public : 멤버 범위 접근자
 
@@ -132,6 +136,11 @@ public class PlayerController : MonoBehaviour
             mrbCallback?.Invoke();
         }
 
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            useCallback?.Invoke();
+        }
+
     }
     
     public void SetMLBDelegate(MLBDelegate _callback)
@@ -142,5 +151,10 @@ public class PlayerController : MonoBehaviour
     public void SetMRBDelegate(MRBDelegate _callback)
     {
         mrbCallback = _callback;
+    }
+
+    public void SetUseDelegate(VoidVoidDelegate _callback)
+    {
+        useCallback = _callback;
     }
 }

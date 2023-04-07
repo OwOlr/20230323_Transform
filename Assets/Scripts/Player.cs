@@ -11,22 +11,24 @@ public class Player : MonoBehaviour
 
     //인벤토리
     [SerializeField]
-    private Queue<Product> inventory = new Queue<Product>();
+    //private Queue<Product> inventory = new Queue<Product>();
+    private Queue<VendingMachine.EVMProduct> inventory = new Queue<VendingMachine.EVMProduct>();
 
     private void Awake()
     {
         playerCtrl = GetComponent<PlayerController>();
         playerCtrl.SetMLBDelegate(OnMLBDown);
         playerCtrl.SetMRBDelegate(OnMRBDown);
+        playerCtrl.SetUseDelegate(UseProduct);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            UseProduct();
-        }
-    }
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.U))
+    //    {
+    //        UseProduct();
+    //    }
+    //}
 
     private void OnTriggerEnter(Collider _other)
     {
@@ -42,7 +44,10 @@ public class Player : MonoBehaviour
         //상품일 경우 인벤토리 넣기
         if (_other.gameObject.CompareTag("Product"))
         {
-            GetProduct(_other.GetComponent<Product>());
+            // GetProduct(_other.GetComponent<Product>());
+            Product product = _other.GetComponent<Product>();
+            GetProduct(product.GetProductType());
+            Destroy(product.gameObject);
         }
 
 
@@ -87,21 +92,28 @@ public class Player : MonoBehaviour
     public void UseProduct()
     {
         if (inventory.Count == 0) return;
-        Product product = inventory.Dequeue();
-        product.Use();
+        //Product product = inventory.Dequeue();
+        //product.Use();
+
+        VendingMachine.EVMProduct product = inventory.Dequeue();
+        Product.UseWithType(product, this);
+
+        //Product.UseWityType(inventory.Dequeue(), this);
     }
 
-    public void GetProduct(Product _product)
+    public void GetProduct(VendingMachine.EVMProduct _product)
     {
         inventory.Enqueue(_product);
 
         StringBuilder sb = new StringBuilder();
-        foreach(Product product in inventory)
+        foreach(VendingMachine.EVMProduct product in inventory)
         {
             //string객체를 두개 만들어서 합친 후 다시 string객체를 떠넘기는 식이라 느리다.
             //sb.Append(product.name + " - ");
             //StringBuilder를 사용하게 되면 속도가 빠르게 된다. 단 +연산자를 사용이 불가능하다.
-            sb.Append(product.name);
+            //sb.Append(product.name);
+            //sb.Append(" - ");
+            sb.Append(product.ToString());
             sb.Append(" - ");
         }
         sb.Append("(");

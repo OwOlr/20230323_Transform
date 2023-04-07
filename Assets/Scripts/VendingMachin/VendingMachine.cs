@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class VendingMachine : MonoBehaviour
 {
+
+    private float angle = 0f;
     public enum EVMProduct 
     {
         Coke,
@@ -60,9 +62,9 @@ public class VendingMachine : MonoBehaviour
         {
             if (uiMenu)
             {
+                uiMenu.gameObject.SetActive(true);
                 uiMenu.BuildBtns(productInfoList,
                     OnClickMenu);
-                uiMenu.gameObject.SetActive(true);
 
             }
         }
@@ -114,8 +116,6 @@ public class VendingMachine : MonoBehaviour
 
     public void OnClickMenu(int _btnNum, UIMenuButton _menuBtn)
     {
-
-
         //Debug.Log(productInfoList[_btnNum].product.ToString() +
         //    "(" + productInfoList[_btnNum].price +
         //    ") : " + productInfoList[_btnNum].stock);
@@ -146,9 +146,35 @@ public class VendingMachine : MonoBehaviour
 
         //상품만들기
 
+        GameObject prefab = ProductSpawnManager.GetPrefab(
+            productInfoList[_btnNum].product);
+
+        
+        if (prefab != null)
+        {
+            Transform vmTr = GetComponent<Transform>();
+            //자판기 주변에 생성
+            //자판기 주변 장애물을 피하면서 배치.
+            Instantiate(prefab, Set(angle+=60f), 
+                Quaternion.identity);
+
+        }
+
         //보유 돈 차감
 
+    }
 
+    private Vector3 Set(float _angle)
+    {
+        Transform vmTr = GetComponent<Transform>();
+        
+        
+        float angle2Rad = _angle * Mathf.Deg2Rad;
+        Vector3 anglePos = new Vector3(Mathf.Cos(angle2Rad), 0, Mathf.Sin(angle2Rad));
+
+        
+
+        return vmTr.position + (anglePos * 2);
     }
 
 }
