@@ -14,6 +14,15 @@ public class Player : MonoBehaviour
     //private Queue<Product> inventory = new Queue<Product>();
     private Queue<VendingMachine.EVMProduct> inventory = new Queue<VendingMachine.EVMProduct>();
 
+    [SerializeField]private UIMoney uiMoney = null;
+    private int money = 10000;
+
+    public int Money
+    {
+        get { return money; }
+    }
+
+
     private void Awake()
     {
         playerCtrl = GetComponent<PlayerController>();
@@ -22,13 +31,21 @@ public class Player : MonoBehaviour
         playerCtrl.SetUseDelegate(UseProduct);
     }
 
-    //private void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.U))
-    //    {
-    //        UseProduct();
-    //    }
-    //}
+    private void Start()
+    {
+        uiMoney.UpdatePosition(transform.position);
+        uiMoney.UpdateMoney(money);
+    }
+
+    private void Update()
+    {
+        //if (Input.GetKeyDown(KeyCode.U))
+        //{
+        //    UseProduct();
+        //}
+
+        uiMoney.UpdatePosition(transform.position);
+    }
 
     private void OnTriggerEnter(Collider _other)
     {
@@ -120,6 +137,13 @@ public class Player : MonoBehaviour
         sb.Append(inventory.Count);
         sb.Append(")");
         Debug.Log(sb.ToString());
+    }
+
+    public void Buy(int _price)
+    {
+        if (_price > money) return;
+        money -= _price;
+        if (uiMoney) uiMoney.UpdateMoney(money);
     }
 
 }
